@@ -14,7 +14,7 @@ These models use the [torch_xla][1] framework.
    export XLA_HLO_DEBUG=1
    ```
 
-1. Run the trainer. The default is to train Llama 3.0 8B sharded over 4 v6e chips.
+1. Run the trainer. The default config trains Llama 3.0 8B sharded over 4 chips and is tested for v6e.
 
    ```sh
    python3 torchprime/torch_xla_models/train.py
