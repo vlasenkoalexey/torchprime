@@ -11,6 +11,14 @@ on:
         description: "GCS artifact directory to use for the run"
         required: true
         type: string
+      step_time_lower_bound:
+        description: "Lower bound for step time (in seconds)"
+        required: true
+        type: number
+      step_time_upper_bound:
+        description: "Upper bound for step time (in seconds)"
+        required: true
+        type: number
     secrets:
       GCP_SA_KEY:
         required: true
@@ -52,3 +60,7 @@ jobs:
         run: |
           profile_dir="${{ inputs.artifact_dir }}/${{ inputs.jobset_name }}/profile/0-0"
           e2e_testing/check_profile.py "$profile_dir"
+      - name: Validate metrics
+        run: |
+          output_dir="${{ inputs.artifact_dir }}/${{ inputs.jobset_name }}/outputs/0-0"
+          e2e_testing/check_step_time.py "$output_dir" "${{ inputs.step_time_lower_bound }}" "${{ inputs.step_time_upper_bound }}"

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "torchprime"
 version = "0.1.0"
-description = "TorchPrime, reference model implementations for PyTorch on TPU/GPU using torch_xla and torchax"
+description = "torchprime, reference model implementations for PyTorch on TPU/GPU using torch_xla and torchax"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
@@ -18,11 +18,12 @@ dependencies = [
     "datasets==3.0.0",
     "hydra-core==1.3.0",
     "optax==0.2.4",
-    "tensorflow-cpu==2.18.0",
-    "tensorboard==2.18.0",
-    "tensorboard-plugin-profile==2.18.0",
-    "tf_keras==2.18.0",
+    "tensorflow-cpu==2.19.0",
+    "tensorboard==2.19.0",
+    "tensorboard-plugin-profile==2.19.0",
+    "tf_keras==2.19.0",
     "protobuf==4.25.5",
+    "dataclasses-json==0.6.7",
 ]
 
 [project.optional-dependencies]
@@ -35,11 +36,15 @@ dev = [
     "dataclasses-json~=0.6.7",
     "watchdog~=6.0.0",
     "pathspec~=0.12.1",
+    "tomli~=2.2.1",
     "xpk@git+https://github.com/AI-Hypercomputer/xpk@e52a5f4cd56ad50aeab06d55100cf4d3abc4c2c8"
 ]
 
 [project.scripts]
 tp = "torchprime.launcher.cli:cli"
+
+[tool.torchprime]
+torch_xla_version = "20250426"
 
 [tool.setuptools.packages.find]
 where = [""]

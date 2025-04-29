@@ -151,6 +151,8 @@ tp run torchprime/torch_xla_models/train.py \
 which is the convention for running SPMD distributed workloads. See `tp run
 --help` for more advanced features.
 
+The version of `torch_xla` used by `tp run` is specified in `pyproject.toml`.
+
 #### Env vars passed to the workload
 
 `tp run` will pick up these environment variables locally and proxy them to the
@@ -167,6 +169,8 @@ Besides forwarding your command line arguments, `tp run` will add:
 
 - `profile_dir=[...]`: path to a [profile][torch_xla_profile] directory
   accessible by the workload
+- `output_dir=[...]` path to a directory where the workload may store output
+  artifacts such as metrics and checkpoints
 
 ## Supported Models
 
@@ -194,8 +198,8 @@ optimization thereafter.
 | **Model**            | **Implemented**                                                        | **Optimized**                                                        | **Converges** |
 | -------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------- | ------------- |
 | Llama 3.0 8B         | [✅](torchprime/torch_xla_models/README.md#llama-30-8b-on-v6e-256)     | [✅](torchprime/torch_xla_models/README.md#llama-30-8b-on-v6e-256)   | [TODO](https://github.com/AI-Hypercomputer/torchprime/issues/90) |
-| Llama 3.1 8B         | [✅](torchprime/torch_xla_models/README.md#llama-31-8b-on-v6e-256)     | [TODO](https://github.com/AI-Hypercomputer/torchprime/issues/133)    | TODO |
-| Llama 3.1 70B        | [TODO](https://github.com/AI-Hypercomputer/torchprime/issues/17)       | TODO                                                                 | TODO |
+| Llama 3.1 8B         | [✅](torchprime/torch_xla_models/README.md#llama-31-8b-on-v6e-256)     | [✅](torchprime/torch_xla_models/README.md#llama-31-8b-on-v6e-256)    | TODO |
+| Llama 3.1 70B        | [✅](torchprime/torch_xla_models/README.md#llama-31-70b-on-v6e-256)    | [✅](torchprime/torch_xla_models/README.md#llama-31-70b-on-v6e-256)   | TODO |
 | Llama 3.1 405B       | [✅](torchprime/torch_xla_models/README.md#llama-31-405b-on-v6e-256)   | [✅](torchprime/torch_xla_models/README.md#llama-31-405b-on-v6e-256) | TODO |
 | Llama 4 Scout        | [TODO](https://github.com/AI-Hypercomputer/torchprime/issues/198)      | TODO | TODO |
 | Llama 4 Maverick     | [TODO](https://github.com/AI-Hypercomputer/torchprime/issues/200)      | TODO | TODO |
@@ -232,67 +236,7 @@ version is not expected to be run.
 
 Contributions are welcome! Please feel free to submit a pull request.
 
-When developing, use `pip install -e '.[dev]'` to install dev dependencies such
-as linter and formatter.
-
-### How to run tests
-
-```sh
-pytest
-```
-
-### How to run some of the tests, and re-run them whenever you change a file
-
-```sh
-tp -i test ... # replace with path to tests/directories
-```
-
-### How to format
-
-```sh
-ruff format
-```
-
-### How to lint
-
-```sh
-ruff check [--fix]
-```
-
-You can install a Ruff VSCode plugin to check errors and format files from the
-editor.
-
-### How to run inside the docker container locally
-
-You can also run locally without XPK with docker. When running inside the docker
-container, it will use the same dependencies and build process as used in the
-XPK approach, improving the hermeticity and reliability.
-
-```sh
-tp docker-run torchprime/torch_xla_models/train.py
-```
-
-This will run the torchprime docker image locally. You can also add `--use-hf`
-to run HuggingFace model locally.
-
-```sh
-tp docker-run --use-hf torchprime/hf_models/train.py
-```
-
-## Run distributed training with local torch/torch_xla wheel
-
-torchprime supports running with user specified torch and torch_xla wheels
-placed under `local_dist/` directory. The wheel will be automatically installed
-in the docker image when use `tp run` command. To use the wheel, add flag
-`--use-local-wheel` to `tp run` command:
-
-```sh
-tp run --use-local-wheel torchprime/hf_models/train.py
-```
-
-The wheels should be built inside a [PyTorch/XLA development docker
-image][torch_xla_dev_docker] or the PyTorch/XLA VSCode Dev Container to minimize
-compatibility issues.
+Refer to the [contributor guide](./docs/contributor/README.md) to get started.
 
 ## License
 
